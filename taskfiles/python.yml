@@ -1,0 +1,60 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  # Path to the pyproject.toml file that defines the formatting and linting rules
+  # We're using a relative path based on the monorepo structure, but in the future
+  # we might want to use Taskfile special variables to make this more robust
+  # https://taskfile.dev/api/#special-variables
+  # NB: as of v3.23.0 special variables are no use for this
+  PYPROJECT_PATH: ../../libs/shared/pyproject.toml
+
+tasks:
+  virtualenv:
+    desc: Creates a Python virtualenv
+    cmds:
+      - python -m venv .venv
+    status:
+      - test -d .venv
+
+  install:
+    desc: Installs Python dependencies via Poetry
+    deps:
+      - virtualenv
+    cmds:
+      - poetry install --sync
+    sources:
+      - pyproject.toml
+      - poetry.lock
+      - poetry.toml
+
+  lint:
+    desc: Lint the Python code
+    deps:
+      - install
+    cmds:
+      - poetry run flake8 --toml-config {{.PYPROJECT_PATH}} .
+
+  format:
+    desc: Formats the Python code
+    deps:
+      - install
+    cmds:
+      - poetry run black --config {{.PYPROJECT_PATH}} .
+      - poetry run isort --settings {{.PYPROJECT_PATH}} .
+
+  test:
+    desc: Run the unit tests
+    deps:
+      - install
+    cmds:
+      - poetry run pytest .
+
+  cleanup:
+    desc: Cleans up the Python environment
+    cmds:
+      - rm -rf .venv/
+      - rm -rf .pytest_cache/
+      - find . -name __pycache__ -type d -exec rm -rf {} +
+      - rm -rf .task/

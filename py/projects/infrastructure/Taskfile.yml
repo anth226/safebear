@@ -1,0 +1,14 @@
+# https://taskfile.dev
+
+version: "3"
+
+includes:
+  python: ../../../taskfiles/python.yml
+  pulumi: ../../../taskfiles/pulumi.yml
+
+tasks:
+  deploy:
+    desc: "Deploys the Pulumi stack"
+    aliases: [default]
+    cmds:
+      - task: pulumi:up

@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "api"
+version = "0.0.0"
+description = ""
+authors = ["Louis Amon <louis@nuage.studio>"]
+license = "Proprietary"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = { version = "^1.10.7", extras = ["email"] }
+strawberry-graphql = { version = "^0.165.0", extras = [
+    "pydantic",
+    "debug-server",
+] }
+jinja2 = "^3.1.2"
+aws-lambda-powertools = { version = "^2.10.0", extras = ["all"] }
+mangum = "^0.17.0"
+shared = { path = "../../libs/shared", develop = true }
+polyfactory = { version = "^2.0.0a1", extras = ["pydantic"] }
+
+[tool.poetry.group.dev.dependencies]
+shared = { path = "../../libs/shared", develop = true, extras = [
+    "code-quality",
+] }
+pytest = "^7.3.0"
+pytest-asyncio = "^0.21.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

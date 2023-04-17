@@ -1,0 +1,28 @@
+query getTasks {
+  labelingTasks {
+    id
+    label
+    score
+    message
+  }
+}
+
+query getTaskHistory {
+  labelingHistory {
+    id
+    label
+    message
+  }
+}
+
+mutation acceptLabel($messageId: ID!) {
+  acceptLabel(messageId: $messageId)
+}
+
+mutation refuseLabel($messageId: ID!) {
+  acceptLabel(messageId: $messageId)
+}
+
+mutation skipLabel($messageId: ID!) {
+  skipLabel(messageId: $messageId)
+}

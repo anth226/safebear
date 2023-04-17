@@ -1,0 +1,118 @@
+{
+  "folders": [
+    {
+      "name": "✨ root",
+      "path": "."
+    },
+    {
+      "name": "📱 app",
+      "path": "js/apps/app"
+    },
+    {
+      "name": "🌎 web",
+      "path": "js/apps/web"
+    },
+    {
+      "name": "🌎 admin",
+      "path": "js/apps/admin"
+    },
+    {
+      "name": "⚡️ api",
+      "path": "py/projects/api"
+    },
+    {
+      "name": "🧱 infrastructure",
+      "path": "py/projects/infrastructure"
+    },
+    {
+      "name": "🧠 nlp",
+      "path": "py/projects/nlp"
+    },
+    {
+      "name": "⏳ services",
+      "path": "py/projects/services"
+    },
+    {
+      "name": "📦 py-shared",
+      "path": "py/libs/shared"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "search.exclude": {
+      "**/.venv": true,
+      "**/.task": true,
+      "**/node_modules": true,
+      "**/pnpm-lock.yaml": true,
+      "**/poetry.lock": true,
+      "**/*.svg": true
+    },
+    "task.autoDetect": "off",
+    // Python
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+      "--toml-config",
+      "../../libs/shared/pyproject.toml"
+    ],
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+      "--config",
+      "../../libs/shared/pyproject.toml"
+    ],
+    "isort.args": [
+      "--settings",
+      "../../libs/shared/pyproject.toml"
+    ],
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "notebook.formatOnSave.enabled": true,
+    "search.experimental.notebookSearch": true,
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.python",
+      "editor.rulers": [
+        88
+      ]
+    },
+    "[json|jsonc|yaml|html|typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[toml]": {
+      "editor.defaultFormatter": "tamasfe.even-better-toml"
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "format",
+        "type": "shell",
+        "command": "task format"
+      },
+      {
+        "label": "lint",
+        "type": "shell",
+        "command": "task lint"
+      },
+      {
+        "label": "build",
+        "command": "task build",
+        "type": "shell",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      },
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.isort",
+      "esbenp.prettier-vscode",
+      "tamasfe.even-better-toml"
+    ]
+  }
+}

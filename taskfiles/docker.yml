@@ -1,0 +1,31 @@
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+  build:
+    desc: Builds the Lambda function's Docker image
+    cmds:
+      - >
+        docker build {{.CONTEXT | default "."}}
+        --file {{.DOCKERFILE | default "Dockerfile"}}
+        --platform {{.ARCHITECTURE | default "linux/amd64"}}
+        --compress
+        {{if .TAG}}--tag {{.TAG}}{{end}}
+        {{if .TARGET}}--target {{.TARGET}}{{end}}
+
+  explore:
+    desc: Runs a shell inside the Lambda docker image
+    cmds:
+      - >-
+        docker run -it --rm
+        --platform {{.ARCHITECTURE | default "linux/amd64"}}
+        --entrypoint /bin/bash
+        {{.TAG}}
+
+  digest:
+    desc: Prints the image digest
+    deps:
+      - build
+    cmds:
+      - docker inspect --format='{{index .RepoDigests 0}}' {{.TAG}}

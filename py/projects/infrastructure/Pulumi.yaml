@@ -1,0 +1,14 @@
+# https://www.pulumi.com/docs/reference/pulumi-yaml/#example-project-file-with-all-possible-attributes
+name: safebear
+description: Safebear infra-as-code
+stackConfigDir: stacks/
+runtime:
+  name: python
+  options:
+    virtualenv: .venv
+config:
+  aws:region: eu-west-3
+  snowflake:region: eu-west-3
+  snowflake:role: SYSADMIN
+  snowflake:username: PULUMI
+  snowflake:account: abc123

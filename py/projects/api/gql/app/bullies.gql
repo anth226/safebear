@@ -1,0 +1,19 @@
+query bully {
+  bully(handle: "foo") {
+    handle
+    platform
+    numToxicMessages
+    labels
+    lastMessage
+  }
+}
+
+query bullies($orderBy: BullyOrderBy) {
+  bullies(orderBy: $orderBy) {
+    handle
+    platform
+    numToxicMessages
+    labels
+    lastMessage
+  }
+}

@@ -1,0 +1,9 @@
+# Create a user and return the user object
+mutation createUser($firstName: String!, $lastName: String!) {
+  register(input: { firstName: $firstName, lastName: $lastName })
+}
+
+# Disable a given user
+mutation disableUser($id: ID!) {
+  disableUser(id: $id)
+}

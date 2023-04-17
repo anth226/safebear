@@ -1,0 +1,20 @@
+query getAdmins {
+  admins {
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
+mutation updateAdmin($adminId: ID!) {
+  updateAdmin(adminId: $adminId, input: { email: "test@example.org" })
+}
+
+mutation disableAdmin($adminId: ID!) {
+  disableAdmin(adminId: $adminId)
+}
+
+mutation deleteAdmin($adminId: ID!) {
+  deleteAdmin(adminId: $adminId)
+}

@@ -1,0 +1,12 @@
+query pharos($platform: Platform!, $handle: ID!) {
+  pharosReport(platform: $platform, handle: $handle) {
+    firstName
+    lastName
+    gender
+    age
+    city
+    country
+    platformUrl
+    body
+  }
+}

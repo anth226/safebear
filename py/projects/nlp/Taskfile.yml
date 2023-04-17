@@ -1,0 +1,47 @@
+# https://taskfile.dev
+
+version: "3"
+
+includes:
+  python: ../../../taskfiles/python.yml
+#   docker: ../../../taskfiles/docker.yml
+
+# vars:
+#   TAG: "safebear/nlp"
+#   ARCHITECTURE: linux/arm64
+#   CONTEXT: ../..
+#   DOCKERFILE: ../../Dockerfile
+#   TARGET: nlp
+
+# dotenv:
+#   - .env
+
+tasks:
+  get-ecr-images:
+    desc: List SageMaker prebuilt images in ECR
+    cmds:
+      - poetry run python -m scripts.ecr-images
+
+  datasets:download:
+    desc: "Downloads the datasets"
+    deps:
+      - python:install
+    env:
+      KAGGLE_USERNAME: "{{.KAGGLE_USERNAME}}"
+      KAGGLE_KEY: "{{.KAGGLE_KEY}}"
+    vars:
+      DATA_DIR: ./data
+    cmds:
+      - >-
+        poetry run kaggle datasets download
+        ludovick/jigsawtanslatedgoogle
+        --path {{.DATA_DIR}}
+      - >-
+        poetry run kaggle datasets download
+        miklgr500/jigsaw-train-multilingual-coments-google-api
+        --path {{.DATA_DIR}}
+      # https://www.kaggle.com/competitions/jigsaw-multilingual-toxic-comment-classification/data
+      - >-
+        poetry run kaggle competitions download
+        jigsaw-multilingual-toxic-comment-classification
+        --path {{.DATA_DIR}}

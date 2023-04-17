@@ -1,0 +1,224 @@
+enum BullyOrderBy {
+  DATE
+  FREQUENCY
+  VIRULENCE
+}
+
+"""A toxic user"""
+type BullyType {
+  handle: ID!
+  platform: Platform!
+  numToxicMessages: Int!
+  labels: [Label!]!
+  lastMessage: DateTime!
+}
+
+"""A User's child"""
+type Child {
+  stats: UserStatisticsType!
+  firstName: String!
+  avatarUrl: String!
+  linkedAccounts: [LinkedAccount!]!
+}
+
+"""Date (isoformat)"""
+scalar Date
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+"""Type of identity document"""
+enum DocumentType {
+  PASSPORT
+  IDENTITY_CARD
+}
+
+"""A toxicity label"""
+enum Label {
+  IDENTITY_HATE
+  INSULT
+  OBSCENE
+  THREAT
+  TOXIC
+}
+
+"""A user's social media account"""
+type LinkedAccount {
+  platform: Platform!
+  logoUrl: String!
+}
+
+type Mutation {
+  """Create a user account"""
+  register(input: RegisterInputModel!): String!
+
+  """Add a parent to a child's account"""
+  inviteParent(input: UserInvitationInput!): String!
+
+  """Add a child to a parent's account"""
+  inviteChild(input: UserInvitationInput!): String!
+
+  """Upload an identity document to verify a user's identity"""
+  uploadIdentityDocument(input: UploadIdentityDocumentInput!): String!
+
+  """Send a user's selfie to verify their identity"""
+  verifyIdentity(imageBytes: Upload!): String!
+
+  """Select a subscription plan"""
+  selectPlan(plan: Plan!): String!
+
+  """Request to access a child's messages"""
+  accessMessages(conversationId: ID!): String!
+
+  """Approve a parent's request to access messages"""
+  approveAccessMessages(conversationId: ID!): String!
+
+  """Link a platform to a user's account"""
+  linkPlatform(platform: Platform!, oauthToken: String!): String!
+
+  """Unlink a platform from a user's account"""
+  unlinkPlatform(platform: Platform!): String!
+
+  """Update a user's profile"""
+  updateProfile(input: UpdateProfileInput!): String!
+
+  """Delete a user's account"""
+  deleteAccount: String!
+
+  """Log out a user"""
+  logout: String!
+
+  """Block a user"""
+  blockUser(platform: Platform!, handle: String!): String!
+
+  """Unblock a user"""
+  unblockUser(platform: Platform!, handle: String!): String!
+}
+
+"""Pharos summarized data"""
+type PharosReportType {
+  firstName: String!
+  lastName: String!
+  gender: String!
+  age: Int!
+  city: String!
+  country: String!
+  email: String!
+  platformUrl: String!
+  body: String!
+}
+
+"""Subscription plan"""
+enum Plan {
+  BASIC
+  SAFE
+}
+
+"""Social media platform"""
+enum Platform {
+  FACEBOOK
+  INSTAGRAM
+  TWITTER
+}
+
+type Query {
+  me: User!
+  child(userId: String!): Child!
+  bully(handle: ID!): BullyType!
+  bullies(orderBy: BullyOrderBy! = DATE): [BullyType!]!
+  actionHistory: [UserActionHistory!]!
+  pharosReport(platform: Platform!, handle: ID!): PharosReportType!
+}
+
+"""The toxicity evaluation of a given message"""
+input RegisterInputModel {
+  """User's email address"""
+  email: String!
+
+  """User's first name"""
+  firstName: String!
+
+  """User's last name"""
+  lastName: String!
+
+  """User's birthday"""
+  birthday: Date!
+
+  """User's password"""
+  password: String!
+
+  """User's password confirmation"""
+  passwordConfirmation: String!
+}
+
+"""Statistics for a given timeframe"""
+type StatisticsType {
+  totalMessages: Int!
+  toxicMessages: Int!
+  blockedMessages: Int!
+}
+
+scalar UUID
+
+input UpdateProfileInput {
+  firstName: String
+  lastName: String
+  email: String
+  onboardingCompleted: Boolean
+  password: String
+  passwordConfirmation: String
+}
+
+scalar Upload
+
+input UploadIdentityDocumentInput {
+  """Path to the document's image on S3"""
+  path: String!
+  type: DocumentType!
+}
+
+"""A user account"""
+type User {
+  stats: UserStatisticsType!
+  id: UUID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  createdAt: DateTime!
+  fullName: String!
+  avatarUrl: String!
+  birthday: Date!
+  onboardingCompleted: Boolean!
+  identityVerified: Boolean!
+  age: Int!
+  isMinor: Boolean!
+  isParent: Boolean!
+  plan: Plan!
+  linkedAccounts: [LinkedAccount!]!
+}
+
+"""An action taken by a user"""
+type UserActionHistory {
+  timestamp: DateTime!
+  title: String!
+  body: String!
+}
+
+input UserInvitationInput {
+  """
+  One-time invitation token that is used to link a child to a parent's account
+  """
+  token: String
+
+  """Child's email adress"""
+  email: String
+}
+
+"""User statistics"""
+type UserStatisticsType {
+  day: StatisticsType!
+  week: StatisticsType!
+  month: StatisticsType!
+  twoMonths: StatisticsType!
+  quarter: StatisticsType!
+}

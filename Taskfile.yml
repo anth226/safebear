@@ -1,0 +1,51 @@
+# https://taskfile.dev
+
+version: "3"
+
+includes:
+  api:
+    taskfile: py/projects/api/Taskfile.yml
+    dir: py/projects/api
+  nlp:
+    taskfile: py/projects/nlp/Taskfile.yml
+    dir: py/projects/nlp
+  infra:
+    taskfile: py/projects/infrastructure/Taskfile.yml
+    dir: py/projects/infrastructure
+
+tasks:
+  lint:
+    desc: Lints the project
+    deps:
+      - api:python:lint
+      - nlp:python:lint
+      - infra:python:lint
+
+  format:
+    desc: Formats the project
+    deps:
+      - api:python:format
+      - nlp:python:format
+      - infra:python:format
+
+  build:
+    desc: Builds all docker images
+    deps:
+      - api:docker:build
+      # - nlp:docker:build
+
+  install:
+    desc: Installs every workspace
+    deps:
+      - api:python:install
+      - nlp:python:install
+      - infra:python:install
+
+  cleanup:
+    desc: Cleans up the project
+    deps:
+      - api:python:cleanup
+      - nlp:python:cleanup
+      - infra:python:cleanup
+    cmds:
+      - rm -rf .task/

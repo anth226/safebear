@@ -1,0 +1,35 @@
+# User dashboard data
+query me {
+  me {
+    id
+    firstName
+    lastName
+    fullName
+    email
+    avatarUrl
+    birthday
+    isMinor
+    isParent
+    age
+    createdAt
+    onboardingCompleted
+    plan
+    identityVerified
+    stats {
+      day {
+        totalMessages
+        toxicMessages
+        blockedMessages
+      }
+    }
+  }
+}
+
+# History of user actions
+query actionHistory {
+  actionHistory {
+    timestamp
+    title
+    body
+  }
+}

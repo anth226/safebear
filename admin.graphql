@@ -1,0 +1,181 @@
+type AdminUser {
+  id: UUID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  isActive: Boolean!
+  lastSeen: DateTime!
+  createdAt: DateTime!
+}
+
+"""Date (isoformat)"""
+scalar Date
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+enum DirectionEnum {
+  ASC
+  DESC
+}
+
+"""A toxicity label"""
+enum Label {
+  IDENTITY_HATE
+  INSULT
+  OBSCENE
+  THREAT
+  TOXIC
+}
+
+type LabelType {
+  label: Label!
+  severity: Severity!
+  score: Float!
+}
+
+"""A user's social media account"""
+type LinkedAccount {
+  platform: Platform!
+  logoUrl: String!
+}
+
+type Mutation {
+  updateUser(userId: ID!, input: UpdateUserInput!): Boolean!
+  deleteUser(userId: ID!): Boolean!
+  disableUser(userId: ID!): Boolean!
+  deleteUsers(userIds: [ID!]!): Boolean!
+  disableUsers(userIds: [ID!]!): Boolean!
+
+  """Accept a label for a message"""
+  acceptLabel(messageId: ID!): Boolean!
+
+  """Refuse a label for a message"""
+  refuseLabel(messageId: ID!): Boolean!
+
+  """Skip a label, e.g. because you're not sure"""
+  skipLabel(messageId: ID!): Boolean!
+  updateAdmin(adminId: ID!, input: UpdateUserInput!): Boolean!
+  disableAdmin(adminId: ID!): Boolean!
+  deleteAdmin(adminId: ID!): Boolean!
+}
+
+"""Subscription plan"""
+enum Plan {
+  BASIC
+  SAFE
+}
+
+"""Social media platform"""
+enum Platform {
+  FACEBOOK
+  INSTAGRAM
+  TWITTER
+}
+
+type Query {
+  users(filters: UserFiltersInput = null, orderBy: UserOrderByInput = null): [User!]!
+  labelingTasks: [UnverifiedLabel!]!
+  labelingHistory: [VerifiedLabel!]!
+  admins: [AdminUser!]!
+}
+
+"""Severity of a toxicity label"""
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+"""Statistics for a given timeframe"""
+type StatisticsType {
+  totalMessages: Int!
+  toxicMessages: Int!
+  blockedMessages: Int!
+}
+
+scalar UUID
+
+type UnverifiedLabel {
+  id: ID!
+  label: LabelType!
+  message: String!
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+}
+
+"""A user account"""
+type User {
+  stats: UserStatisticsType!
+  id: UUID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  createdAt: DateTime!
+  fullName: String!
+  avatarUrl: String!
+  birthday: Date!
+  onboardingCompleted: Boolean!
+  identityVerified: Boolean!
+  age: Int!
+  isMinor: Boolean!
+  isParent: Boolean!
+  plan: Plan!
+  linkedAccounts: [LinkedAccount!]!
+}
+
+"""User field names"""
+enum UserField {
+  id
+  email
+  password
+  firstName
+  lastName
+  isActive
+  lastSeen
+  createdAt
+  updatedAt
+  fullName
+  avatarUrl
+  birthday
+  onboardingCompleted
+  identityVerified
+  identityDocumentType
+  identityDocumentUrl
+  age
+  isMinor
+  isParent
+  plan
+  linkedAccounts
+}
+
+input UserFiltersInput {
+  query: String
+  plan: Plan
+}
+
+input UserOrderByInput {
+  field: UserField!
+  direction: DirectionEnum! = ASC
+}
+
+"""User statistics"""
+type UserStatisticsType {
+  day: StatisticsType!
+  week: StatisticsType!
+  month: StatisticsType!
+  twoMonths: StatisticsType!
+  quarter: StatisticsType!
+}
+
+type VerifiedLabel {
+  id: ID!
+  label: LabelType!
+  message: String!
+  verifiedBy: String!
+  verifiedAt: DateTime!
+}

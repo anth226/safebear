@@ -1,0 +1,83 @@
+// For format details, see https://aka.ms/devcontainer.json
+// For config options, see the README at:
+// https://github.com/devcontainers/templates/tree/main/src/python
+{
+    "name": "Safebear",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspace",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "isort.args": [
+                    "--settings",
+                    "/workspace/py/pyproject.toml"
+                ],
+                "python.formatting.blackArgs": [
+                    "--config",
+                    "/workspace/py/pyproject.toml"
+                ]
+            },
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                // VSCode
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker",
+                "visualstudioexptteam.vscodeintellicode",
+                "GitHub.copilot",
+                // AWS
+                "mark-tucker.aws-cli-configure",
+                "boto3typed.boto3-ide",
+                "amazonwebservices.aws-toolkit-vscode",
+                // 3rd party
+                "task.vscode-task",
+                "esbenp.prettier-vscode",
+                "christian-kohler.path-intellisense",
+                "davidanson.vscode-markdownlint",
+                "tamasfe.even-better-toml",
+                "wholroyd.jinja"
+            ]
+        }
+    },
+    // Features to add to the dev container. More info: https://containers.dev/features
+    "features": {
+        // Python
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.11.2",
+            "installTools": false
+        },
+        "ghcr.io/devcontainers-contrib/features/poetry:2": {
+            "version": "1.4.2"
+        },
+        "ghcr.io/devcontainers-contrib/features/black:2": {},
+        "ghcr.io/devcontainers-contrib/features/isort:2": {},
+        "ghcr.io/devcontainers-contrib/features/pylint:2": {},
+        "ghcr.io/devcontainers-contrib/features/flake8:2": {},
+        // Javascript
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        },
+        // 3rd party
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+        "ghcr.io/eitsupi/devcontainer-features/go-task:1": {
+            "version": "3.23.0"
+        },
+        "ghcr.io/devcontainers/features/aws-cli:1": {
+            "version": "2.11.6"
+        },
+        "ghcr.io/devcontainers-contrib/features/pulumi:1": {
+            "version": "3.60.0"
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "poetry config virtualenvs.in-project true"
+}

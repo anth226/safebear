@@ -1,0 +1,3 @@
+[installer]
+# Fixes an issue with debugpy 1.6.4
+modern-installation = false

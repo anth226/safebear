@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "shared"
+version = "0.0.0"
+description = "Shared models and utility functions across Python projects in the monorepo"
+authors = ["Louis Amon <louis@nuage.studio>"]
+license = "Proprietary"
+readme = "README.md"
+packages = [{ include = "shared" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pylint = { version = "*", optional = true }
+flake8 = { version = "*", optional = true }
+flake8-pyproject = { version = "*", optional = true }
+black = { version = "*", optional = true }
+flake8-black = { version = "*", optional = true }
+isort = { version = "*", optional = true }
+aws-lambda-powertools = { version = "^2.12.0", extras = ["all"] }
+pydantic = { version = "^1.10.7", extras = ["dotenv"] }
+
+[tool.poetry.group.dev.dependencies]
+
+[tool.poetry.extras]
+code-quality = [
+    "pylint",
+    "flake8",
+    "flake8-pyproject",
+    "black",
+    "flake8-black",
+    "isort",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+skip_gitignore = true
+known_first_party = ["src", "tests", "shared"]
+
+[tool.black]
+preview = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = [
+    "E203", # black disagrees with flake8 on whitespace around slices
+    "E731", # do not assign a lambda expression, use a def
+]
+count = true # print total number of errors
+exclude = [".venv", "__pycache__", ".git"]

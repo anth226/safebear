@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "infrastructure"
+version = "0.0.0"
+description = ""
+authors = ["Louis Amon <louis@nuage.studio>"]
+license = "Proprietary"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pulumi-aws = "^5.33.0"
+pulumi-docker = "^4.1.0"
+pulumi-snowflake = "^0.20.0"
+pulumi = "^3.60.0"
+pulumi-nuage = "^0.1.1"
+shared = { path = "../../libs/shared", develop = true }
+
+[tool.poetry.group.dev.dependencies]
+shared = { path = "../../libs/shared", develop = true, extras = [
+    "code-quality",
+] }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

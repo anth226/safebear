@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "nlp"
+version = "0.0.0"
+description = "Natural Language Processing code"
+authors = ["Louis Amon <louis@nuage.studio>"]
+license = "Proprietary"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+shared = { path = "../../libs/shared", develop = true }
+
+[tool.poetry.group.dev.dependencies]
+shared = { path = "../../libs/shared", develop = true, extras = [
+    "code-quality",
+] }
+
+[tool.poetry.group.notebooks.dependencies]
+# Jupyter notebooks
+openai = "^0.25.0"
+requests = "^2.28.1"
+datasets = "^2.8.0"
+sagemaker = "^2.142.0"
+kaggle = "^1.5.13"
+pandas = "^1.5.3"
+ipykernel = "^6.22.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

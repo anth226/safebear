@@ -1,0 +1,66 @@
+# https://taskfile.dev
+
+version: "3"
+
+includes:
+  python: ../../../taskfiles/python.yml
+  docker:
+    taskfile: ../../../taskfiles/docker.yml
+
+vars:
+  TAG: "safebear/api"
+  ARCHITECTURE: linux/arm64
+  CONTEXT: ../..
+  DOCKERFILE: ../../Dockerfile
+
+tasks:
+  default:
+    deps:
+      - app
+      - admin
+      - schema:watch
+
+  app:
+    desc: Runs the app GraphQL server
+    deps:
+      - python:install
+    vars:
+      PORT: 8000
+    cmds:
+      - >-
+        DEBUG=1
+        poetry run uvicorn src.server:app
+        --port {{.PORT}}
+        --reload
+        --reload-dir src
+        --reload-dir ../../libs/shared/shared
+
+  admin:
+    desc: Runs the admin GraphQL server
+    deps:
+      - python:install
+    vars:
+      PORT: 8001
+    cmds:
+      - >-
+        DEBUG=1
+        poetry run uvicorn src.server:admin
+        --port {{.PORT}}
+        --reload
+        --reload-dir src
+        --reload-dir ../../libs/shared/shared
+
+  schema:
+    desc: Exports the GraphQL schemas
+    cmds:
+      - poetry run python -m scripts.export_schemas
+    sources:
+      - src/**/*.py
+    generates:
+      - ../../../app.graphql
+      - ../../../admin.graphql
+
+  schema:watch:
+    desc: Watches the source files and runs the script to export the GraphQL schemas
+    cmds:
+      - task --watch schema

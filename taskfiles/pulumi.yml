@@ -1,0 +1,44 @@
+# https://taskfile.dev
+
+version: "3"
+
+includes:
+  python: ./python.yml
+
+tasks:
+  select:
+    desc: Select the stack
+    cmds:
+      - pulumi stack select{{if .STACK}} {{.STACK}}{{end}}
+
+  aws:sso:login:
+    desc: Logs into the AWS SSO
+    deps:
+      - select
+    cmds:
+      - aws sso login --profile $(pulumi config get aws:profile)
+    status:
+      - aws sts get-caller-identity --query "Account" --profile $(pulumi config get aws:profile)
+
+  refresh:
+    desc: Refresh the stack's resources' state
+    deps:
+      - aws:sso:login
+    cmds:
+      - pulumi refresh
+
+  up:
+    desc: Deploy the stack via Pulumi
+    deps:
+      - aws:sso:login
+      - python:install
+    cmds:
+      - pulumi up
+
+  preview:
+    desc: Preview the stack changes
+    deps:
+      - aws:sso:login
+      - python:install
+    cmds:
+      - pulumi preview

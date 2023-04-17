@@ -1,0 +1,18 @@
+# Ignore everything
+*
+
+# Allow files and directories
+!Dockerfile
+!.dockerignore
+
+!/libs/shared/shared
+!/libs/shared/pyproject.toml
+!/libs/shared/poetry.lock
+!/libs/shared/README.md
+
+!/projects/api/src
+!/projects/api/pyproject.toml
+!/projects/api/poetry.lock
+
+# Ignore unnecessary files inside allowed directories
+**/__pycache__/
