@@ -1,7 +1,11 @@
 <script>
+	import Sidebar from '../components/Sidebar.svelte';
 	import '../tailwind.css';
 </script>
 
-<main class="flex flex-col justify-center bg-gray-50 px-4 sm:px-8">
+<main class="bg-silver min-h-screen flex gap-0">
+	<Sidebar/>
+	<div class="flex-1">
 	<slot />
+	</div>
 </main>

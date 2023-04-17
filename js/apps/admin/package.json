@@ -71,6 +71,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource/poppins": "^4.5.10",
 		"@leeoniya/ufuzzy": "^1.0.5",
 		"date-fns": "^2.29.3",
 		"parse-link-header": "^2.0.0",

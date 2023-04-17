@@ -9,8 +9,17 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				'silver':{
+				silver:{
+					200: '#131313',
 					DEFAULT: '#F8F8F8'
+				},
+				blue:{
+					DEFAULT: '#7CC0CE',
+					vert:'#007D82',
+					2: '#00979C'
+				},
+				'dark-green':{
+					DEFAULT: '#2A4A51'
 				}
 			}
 		}
