@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { each } from "svelte/internal";
-
+    import { shortcut } from "$lib/shortcut";
     let history = [
         {
             message: "Toi tu vas voir...",
@@ -75,17 +74,17 @@
             <div class="flex items-center justify-center gap-4">
                 <div class="flex flex-col gap-3">
                     <span class="self-center">Oui</span>
-                    <img class="cursor-pointer" src="labellisation/tick.svg" alt="">
+                    <img use:shortcut={{code: 'KeyA'}} on:click={()=>console.log("oui")} class="cursor-pointer" src="labellisation/tick.svg" alt="">
                     <span class="px-2  bg-silver-hr bg-opacity-50 text-center rounded-[10px] self-center -mt-16">A</span>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <span class="self-center">Oui</span>
-                    <img class="cursor-pointer" src="labellisation/cross.svg" alt="">
+                    <span class="self-center">Non</span>
+                    <img use:shortcut={{code: 'KeyX'}} on:click={()=>console.log("no")} class="cursor-pointer" src="labellisation/cross.svg" alt="">
                     <span class="px-2  bg-silver-hr bg-opacity-50 text-center rounded-[10px] self-center -mt-16">X</span>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <span class="self-center">Oui</span>
-                    <img class="cursor-pointer" src="labellisation/idk.svg" alt="">
+                    <span class="self-center">Je ne sais pas</span>
+                    <img use:shortcut={{code: 'Space'}} on:click={()=>console.log("idk")} class="cursor-pointer" src="labellisation/idk.svg" alt="">
                     <span class="px-2  bg-silver-hr bg-opacity-50 text-center rounded-[10px] self-center -mt-16">Space</span>
                 </div>
             </div>
