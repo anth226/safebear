@@ -1,5 +1,6 @@
 import pulumi
 import pulumi_aws as aws
+import pulumi_docker as docker
 import pulumi_nuage.aws as nuage
 
 repository = nuage.Repository(
@@ -9,3 +10,11 @@ repository = nuage.Repository(
 )
 
 auth = aws.ecr.get_authorization_token(registry_id=repository.registry_id)
+
+docker_registry = docker.RegistryArgs(
+    server=auth.proxy_endpoint,
+    username=auth.user_name,
+    password=auth.password,
+)
+
+architecture = nuage.ArchitectureType.ARM64.value
