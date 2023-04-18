@@ -1,0 +1,49 @@
+query GetUsers($filters: UserFiltersInput, $orderBy: UserOrderByInput) {
+  users(filters: $filters, orderBy: $orderBy) {
+    id
+    email
+    firstName
+    lastName
+    createdAt
+    fullName
+    avatarUrl
+    birthday
+    onboardingCompleted
+    identityVerified
+    age
+    isMinor
+    isParent
+    plan
+    linkedAccounts {
+      platform
+      logoUrl
+    }
+    stats {
+      day {
+        totalMessages
+        toxicMessages
+        blockedMessages
+      }
+      week {
+        totalMessages
+        toxicMessages
+        blockedMessages
+      }
+      month {
+        totalMessages
+        toxicMessages
+        blockedMessages
+      }
+      twoMonths {
+        totalMessages
+        toxicMessages
+        blockedMessages
+      }
+      quarter {
+        totalMessages
+        toxicMessages
+        blockedMessages
+      }
+    }
+  }
+}
