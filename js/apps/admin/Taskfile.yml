@@ -1,0 +1,41 @@
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+  dev:
+    desc: Runs the Svelte server locally
+    deps: [install]
+    aliases: [default]
+    cmds:
+      - pnpm run dev
+
+  build:
+    desc: Builds the production-ready bundle
+    deps: [install]
+    cmds:
+      - pnpm run build
+  
+  codegen:
+    desc: Run graphql codegen.
+    deps: [install]
+    cmds:
+      - pnpm generate
+  
+  install:
+    desc: Installs dependencies via pnpm
+    cmds:
+      - pnpm install
+    sources:
+      - package.json
+      - pnpm-lock.yaml
+    generates:
+      - node_modules/**
+      
+  cleanup:
+    desc: Cleans up the project
+    cmds:
+      - rm -rf .svelte-kit/
+      - rm -rf .vercel/
+      - rm -rf node_modules/
+      - rm -rf .task/

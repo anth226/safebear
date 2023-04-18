@@ -1,0 +1,11 @@
+schema: ../../../admin.graphql
+documents:
+  - './src/lib/graphql/*.graphql'
+generates:
+  src/lib/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      useTypeImports: true

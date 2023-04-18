@@ -1,4 +1,3 @@
-from pathlib import Path
 from urllib.parse import ParseResult, urlparse
 
 import pulumi
@@ -12,7 +11,7 @@ from ..certificates import global_certificate, global_certificate_validation
 from ..common import get_env_var_names
 from ..dns.domains import ADMIN_DOMAIN
 from ..dns.zone import zone
-from ..ecr import auth, repository
+from ..ecr import docker_registry, repository
 
 env = pulumi.get_stack()
 architecture = nuage.ArchitectureType.ARM64.value
@@ -22,20 +21,14 @@ SERVICE_DESCRIPTION = (
     f"{pulumi.get_project().capitalize()} GraphQL {SERVICE_NAME} API ({env})"
 )
 
-py_root = Path(__file__).parents[4]
 image = docker.Image(
     resource_name=SERVICE_NAME,
     image_name=repository.url.apply(lambda url: f"{url}:{SERVICE_NAME}"),
+    registry=docker_registry,
     build=docker.DockerBuildArgs(
-        context=str(py_root),
-        dockerfile=str(py_root / "Dockerfile"),
-        platform=f"linux/{architecture}",
+        context="../..",
+        platform=f"linux/{architecture}".lower(),
         target=SERVICE_NAME,
-    ),
-    registry=docker.RegistryArgs(
-        server=auth.proxy_endpoint,
-        username=auth.user_name,
-        password=auth.password,
     ),
 )
 

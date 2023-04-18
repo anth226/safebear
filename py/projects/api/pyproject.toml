@@ -25,6 +25,7 @@ shared = { path = "../../libs/shared", develop = true, extras = [
 ] }
 pytest = "^7.3.0"
 pytest-asyncio = "^0.21.0"
+uvicorn = {version = "^0.21.1", extras = ["standard"]}
 
 [build-system]
 requires = ["poetry-core"]
