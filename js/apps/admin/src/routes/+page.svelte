@@ -1,42 +1,4 @@
-<script>
-	import {
-		SITE_URL,
-		REPO_URL,
-		SITE_TITLE,
-		SITE_DESCRIPTION,
-		DEFAULT_OG_IMAGE,
-	} from '$lib/siteConfig';
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
-
-	/** @type {import('./$types').PageData} */
-	export let data;
-	// technically this is a slighlty different type because doesnt have 'content' but we'll let it slide
-	/** @type {import('$lib/types').ContentItem[]} */
-</script>
-
-<svelte:head>
-	<title>{SITE_TITLE}</title>
-	<link rel="canonical" href={SITE_URL} />
-	<link rel="alternate" type="application/rss+xml" href={SITE_URL + '/rss.xml'} />
-	<meta property="og:url" content={SITE_URL} />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={SITE_TITLE} />
-	<meta name="Description" content={SITE_DESCRIPTION} />
-	<meta property="og:description" content={SITE_DESCRIPTION} />
-	<meta property="og:image" content={DEFAULT_OG_IMAGE} />
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:title" content={SITE_TITLE} />
-	<meta name="twitter:description" content={SITE_DESCRIPTION} />
-	<meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
-</svelte:head>
-
-<div
-	class="flex flex-col items-start justify-center max-w-2xl px-4 pb-16 mx-auto border-gray-200 dark:border-gray-700 sm:px-8"
->
-	<div class="flex flex-col-reverse items-start sm:flex-row">
-		<div class="flex flex-col pr-8">
-		</div>
-	</div>
-
-
-</div>
+<a href="/example" class="underline">Example Page</a>

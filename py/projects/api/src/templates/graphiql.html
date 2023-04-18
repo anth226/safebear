@@ -1,0 +1,61 @@
+{# https://github.com/graphql/graphiql/tree/main/packages/graphiql
+https://github.com/graphql/graphiql/tree/main/examples/graphiql-cdn #}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ title }}</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,
+        <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
+            <!-- Strawberry Emoji as a HTML Entity (hex)  -->
+            <text y=%22.9em%22 font-size=%2280%22>&#x1f353;</text>
+        </svg>"
+    />
+    <style>
+      body {
+        height: 100%;
+        margin: 0;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      #graphiql {
+        height: 100vh;
+      }
+    </style>
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      integrity="sha512-Vf2xGDzpqUOEIKO+X2rgTLWPY+65++WPwCHkX2nFMu9IcstumPsf/uKKRd5prX3wOu8Q0GBylRpsDB26R6ExOg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      integrity="sha512-Wr9OKCTtq1anK0hq5bY3X/AvDI5EflDSAh0mE9gma+4hl+kXdTJPKZ3TwLMBcrgUeoY0s3dq9JjhCQc7vddtFg=="
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+  </head>
+
+  <body>
+    <div id="graphiql">Loading...</div>
+    <script
+      src="https://unpkg.com/graphiql/graphiql.min.js"
+      type="application/javascript"
+    ></script>
+    <script>
+      ReactDOM.render(
+        React.createElement(GraphiQL, {
+          fetcher: GraphiQL.createFetcher({
+            url: "/graphql",
+          }),
+          defaultEditorToolsVisibility: true,
+        }),
+        document.getElementById("graphiql")
+      );
+    </script>
+  </body>
+</html>

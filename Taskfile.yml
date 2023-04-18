@@ -12,6 +12,9 @@ includes:
   infra:
     taskfile: py/projects/infrastructure/Taskfile.yml
     dir: py/projects/infrastructure
+  admin:
+    taskfile: js/apps/admin/Taskfile.yml
+    dir: js/apps/admin
 
 tasks:
   lint:

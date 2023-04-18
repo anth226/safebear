@@ -19,6 +19,12 @@ aws-lambda-powertools = { version = "^2.12.0", extras = ["all"] }
 pydantic = { version = "^1.10.7", extras = ["dotenv"] }
 
 [tool.poetry.group.dev.dependencies]
+pylint = "*"
+flake8 = "*"
+flake8-pyproject = "*"
+black = "*"
+flake8-black = "*"
+isort = "*"
 
 [tool.poetry.extras]
 code-quality = [
