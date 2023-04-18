@@ -53,7 +53,7 @@
                     </div>
                     <div class="flex gap-1">
                         {#each item.labels as label}
-                        <p class={`px-3 pb-1  border rounded-[5px] ${label == "Menace" ? "border-orange bg-gradient-to-r from-primary to-primary" : "border-blue-less bg-blue-less bg-opacity-10"} `}>
+                        <p class={`px-3 pb-1  border rounded-[5px] cursor-pointer  ${label == "Menace" ? "border-orange bg-gradient-to-r from-primary to-primary" : "border-blue-less bg-blue-less bg-opacity-10"} `}>
                             <span class={`${ label == "Menace" ? "text-orange" : "text-blue-less"} text-[10px] font-semibold`}>{label}</span>
                         </p>
                         {/each}
@@ -70,7 +70,7 @@
             </div>
             <div class="rounded-[14px] border-2 border-hr flex flex-col px-4 py-3 shadow-label bg-white">
                 <span class="text-silver-hr">Message:</span>
-                <textarea value="Dis donc sale **** tu réponds plus à mes messages ? T’as fait comme ton père c’est ça tu t’es barré ! Espèce de singe" class="focus:outline-none" name="" id="" cols="30" rows="6"></textarea>
+                <textarea value="Dis donc sale **** tu réponds plus à mes messages ? T’as fait comme ton père c’est ça tu t’es barré ! Espèce de singe" class="focus:outline-none resize-none" name="" id="" cols="30" rows="6"></textarea>
             </div>
             <div class="flex items-center justify-center gap-4">
                 <div class="flex flex-col gap-3">
