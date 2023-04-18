@@ -3,7 +3,6 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	extends: [
 		'eslint:recommended',
-		// 'plugin:@typescript-eslint/recommended',  // todo: https://stackoverflow.com/questions/57597142/how-to-run-typescript-eslint-on-ts-files-and-eslint-on-js-files-in-the-same-pr
 		'prettier'
 	],
 	plugins: ['svelte3', '@typescript-eslint'],
