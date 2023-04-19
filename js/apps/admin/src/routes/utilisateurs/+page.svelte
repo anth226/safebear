@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import toast from "svelte-french-toast";
 	import type { IUser } from "$lib/types";
+    import ClickOutside from 'svelte-click-outside'
     import { data } from "./data";
 
     const pageSize = 7
@@ -9,8 +10,10 @@
     let links: number[] = []
     let currentPage = 1
     let selected: number[] = []
+    let isFilterOpen = false, isFolmuraFilterOpen = false, isStatusFilterOpen = false;
+
     let search = ""
-    $: users = data.filter(user => user.name.toLowerCase().includes(search.toLowerCase()))
+    $: users = data.filter(user => user.name.toLowerCase().includes(search.toLowerCase()) || user.date.includes(search) || user.kyc.toLowerCase().includes(search.toLowerCase()))
     function changePage(pageNumber: number){
         currentPage = pageNumber
         selected  = []
@@ -29,6 +32,26 @@
         }else{
             selected = [...selected, id]
         }
+    }
+
+    function deleteData(){
+        users = users.filter(user => !selected.includes(user.id))
+        selected = []
+        toast.success("Supprimé avec succès")
+    }
+
+    function deactivateData(){
+        users = users.map(user => {
+            if(selected.includes(user.id)){
+                return {
+                    ...user,
+                    status: "Désactivé"
+                }
+            }
+            return user
+        })
+        selected = []
+        toast.success("Complété avec succès")
     }
 
     function displayPage(pageNumber: number) {
@@ -63,18 +86,121 @@
     </div>
     <div class="flex justify-between">
         <h1 class="text-2xl">Utilisateurs</h1>
-        <div class="flex gap-3 bg-white px-3 rounded-lg cursor-pointer">
-            <img class="cursor-pointer" src="util/filter.svg" alt="">
-            <span class="font-medium text-sm self-center">Filter</span>
+        <div class="flex gap-4">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div 
+                class="self-center flex gap-3 px-3 py-2 rounded-lg cursor-pointer bg-white"
+                class:opacity-40={isFilterOpen}
+                on:click={()=>isFilterOpen=!isFilterOpen}
+            >
+                <img class="cursor-pointer" src="util/filter.svg" alt="">
+                <span class="font-medium text-sm self-center">Filter</span>
+            </div>
+            {#if isFilterOpen}
+            <ClickOutside
+                on:clickoutside={() => (isFolmuraFilterOpen = false)}
+            >
+                <div 
+                class="flex flex-col gap-2 bg-white px-3 py-2 w-[135px] self-center relative"
+                class:pb-2={isFolmuraFilterOpen}
+                class:rounded-tl-lg={isFolmuraFilterOpen}
+                class:rounded-tr-lg={isFolmuraFilterOpen}
+                class:rounded-lg={!isFolmuraFilterOpen}
+                class:shadow-label={isFolmuraFilterOpen}
+                >
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <div class="flex gap-3 cursor-pointer" on:click={()=>isFolmuraFilterOpen=!isFolmuraFilterOpen}>
+                        <span class="font-medium text-sm self-center">Par formule</span>
+                        <img 
+                            class="w-[12px] self-center"
+                            class:rotate-180={!isFolmuraFilterOpen}
+                            class:mb-1={!isFolmuraFilterOpen}
+                            class:mt-1={isFolmuraFilterOpen}
+                            src="util/arrow.svg"
+                            alt=""
+                        >
+                    </div>
+                    {#if isFolmuraFilterOpen}
+                    <div 
+                        class="bg-white flex flex-col gap-0.5 absolute top-8 left-0 px-3 w-[135px] rounded-bl-lg rounded-br-lg pb-2"
+                        class:shadow-label={isFolmuraFilterOpen}
+                        >
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-center"></div>
+                            <span class="font-medium text-xs self-center">Safe</span>
+                        </div>
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-center"></div>
+                            <span class="font-medium text-xs self-center">Safe Family</span>
+                        </div>
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-center"></div>
+                            <span class="font-medium text-xs self-center">Basic</span>
+                        </div>
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-center"></div>
+                            <span class="font-medium text-xs self-center">Basic Family</span>
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+            </ClickOutside>
+            <ClickOutside
+                on:clickoutside={() => (isStatusFilterOpen = false)}
+            >
+                <div 
+                class="flex flex-col gap-2 bg-white px-3 py-2 w-[135px] self-center relative"
+                class:pb-2={isStatusFilterOpen}
+                class:rounded-tl-lg={isStatusFilterOpen}
+                class:rounded-tr-lg={isStatusFilterOpen}
+                class:rounded-lg={!isStatusFilterOpen}
+                class:shadow-label={isStatusFilterOpen}
+                >
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <div class="flex gap-3 cursor-pointer" on:click={()=>isStatusFilterOpen=!isStatusFilterOpen}>
+                        <span class="font-medium text-sm self-center">Par statut</span>
+                        <img 
+                            class="w-[12px] self-center"
+                            class:rotate-180={!isStatusFilterOpen}
+                            class:mb-1={!isStatusFilterOpen}
+                            class:mt-1={isStatusFilterOpen}
+                            src="util/arrow.svg"
+                            alt=""
+                        >
+                    </div>
+                    {#if isStatusFilterOpen}
+                    <div 
+                        class="bg-white flex flex-col gap-0.5 absolute top-8 left-0 px-3 w-[135px] rounded-bl-lg rounded-br-lg pb-2"
+                        class:shadow-label={isStatusFilterOpen}
+                        >
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-center"></div>
+                            <span class="font-medium text-xs self-center">Client -18 ans</span>
+                        </div>
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-center"></div>
+                            <span class="font-medium text-xs self-center">Client +18 ans</span>
+                        </div>
+                        <div class="flex gap-2 cursor-pointer">
+                            <div class="h-[10px] w-[10px] rounded-full border border-dark-green self-start"></div>
+                            <span class="font-medium text-xs self-center">Compte désactivé</span>
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+            </ClickOutside>
+            {/if}
         </div>
     </div>
     {#if selected.length > 0 && pageData.length != 0}
     <div class="bg-blue-vert bg-opacity-20 py-4 rounded-[3px] w-full flex gap-5 px-6">
-        <div class="flex gap-2 cursor-pointer">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="flex gap-2 cursor-pointer" on:click={deleteData}>
             <img src="util/delete.svg" alt="">
             <span class="text-blue-vert font-medium underline">Supprimer le compte</span>
         </div>
-        <div class="flex gap-2 cursor-pointer">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="flex gap-2 cursor-pointer" on:click={deactivateData}>
             <img src="util/deactivate.svg" alt="">
             <span class="text-blue-vert font-medium underline">Désactiver le compte</span>
         </div>
@@ -170,3 +296,8 @@
         {/each}
     </div>
 </div>
+{#if users.length == 0}
+    <div class="flex  w-full  bg-silver justify-center">
+        <h4 class="self-center text-black opacity-[45%]">Aucune donnée disponible...</h4>
+    </div>
+{/if}

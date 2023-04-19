@@ -33,6 +33,9 @@ module.exports = {
 				},
 				inactive:{
 					DEFAULT: 'rgba(217, 217, 217, 0.52);'
+				},
+				hidden:{
+					DEFAULT: 'rgba(255, 255, 255, 0.52)'
 				}
 			},
 			fontFamily:{

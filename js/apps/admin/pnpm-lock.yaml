@@ -35,6 +35,7 @@ specifiers:
   svelte: ^3.55.1
   svelte-action-balancer: ^1.0.4
   svelte-check: ^3.1.0
+  svelte-click-outside: ^1.0.0
   svelte-french-toast: 1.0.4-beta.0
   svelte-preprocess: ^5.0.1
   sveltekit-search-params: ^1.0.10
@@ -55,6 +56,7 @@ dependencies:
   shiki: 0.14.1
   snarkdown: 2.0.0
   svelte-action-balancer: 1.0.4
+  svelte-click-outside: 1.0.0
   svelte-french-toast: 1.0.4-beta.0_svelte@3.58.0
   sveltekit-search-params: 1.0.11_ssp7a2yp5jpcmpup4cfh6jeqky
 
@@ -4779,6 +4781,10 @@ packages:
       - stylus
       - sugarss
     dev: true
+
+  /svelte-click-outside/1.0.0:
+    resolution: {integrity: sha512-TVDn5Vd8L0WI0Y9BFh/2I7judkIqYCbFKkGwGl/f8D0inwBFNyU0weKhrbJY4VQtYnWriq0NPl+mIYGisgALbw==}
+    dev: false
 
   /svelte-french-toast/1.0.4-beta.0_svelte@3.58.0:
     resolution: {integrity: sha512-PkYNukEQAPZyV5ei+JzeYEsbaXFSbJS8/SDTdC8giYa5Atxp2SRepFnPDWx6mu7rV53g886FNLktPMLwRljkpw==}
