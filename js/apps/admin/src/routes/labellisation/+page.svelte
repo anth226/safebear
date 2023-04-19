@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-    <title>Labellisation</title>
+    <title>Labellisation - Safebear</title>
 </svelte:head>
 <div class="flex flex-col gap-8">
     <h2 class="font-medium text-black text-2xl">Labellisation</h2>

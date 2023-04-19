@@ -49,15 +49,17 @@
 	},
 	"type": "module",
 	"dependencies": {
-    	"graphql": "^16.6.0",
-    	"graphql-request": "^6.0.0",
+		"@fontsource/lato": "^4.5.10",
 		"@leeoniya/ufuzzy": "^1.0.5",
 		"date-fns": "^2.29.3",
+		"graphql": "^16.6.0",
+		"graphql-request": "^6.0.0",
 		"parse-link-header": "^2.0.0",
 		"prism-themes": "^1.9.0",
 		"shiki": "^0.14.1",
 		"snarkdown": "^2.0.0",
 		"svelte-action-balancer": "^1.0.4",
+		"svelte-french-toast": "1.0.4-beta.0",
 		"sveltekit-search-params": "^1.0.10"
 	}
 }
