@@ -4,14 +4,13 @@
 		REPO_URL,
 		SITE_TITLE,
 		SITE_DESCRIPTION,
-		DEFAULT_OG_IMAGE,
+		DEFAULT_OG_IMAGE
 	} from '$lib/siteConfig';
-
-
+	import SafeBearAdmin from '../Layout/SafeBearAdmin/SafeBearAdmin.svelte';
 	/** @type {import('./$types').PageData} */
-	export let data;
+	// export let data;
 	// technically this is a slighlty different type because doesnt have 'content' but we'll let it slide
-	/** @type {import('$lib/types').ContentItem[]} */
+	// /** @type {import('$lib/types').ContentItem[]} */
 </script>
 
 <svelte:head>
@@ -30,13 +29,14 @@
 	<meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
 </svelte:head>
 
-<div
-	class="flex flex-col items-start justify-center max-w-2xl px-4 pb-16 mx-auto border-gray-200 dark:border-gray-700 sm:px-8"
+<!-- <div
+	class="mx-auto flex max-w-2xl flex-col items-start justify-center border-gray-200 px-4 pb-16 dark:border-gray-700 sm:px-8"
 >
 	<div class="flex flex-col-reverse items-start sm:flex-row">
-		<div class="flex flex-col pr-8">
-		</div>
+		<div class="flex flex-col pr-8"></div>
 	</div>
+</div> -->
 
-
-</div>
+<main>
+	<SafeBearAdmin />
+</main>
