@@ -4,13 +4,13 @@
     import ClickOutside from 'svelte-click-outside'
     import { data } from "./data";
 
-    const pageSize = 7
+    const pageSize = 7, linkCount= 3
     let users = data
     let pageData: IUser[] = []
-    let links: number[] = []
-    let currentPage = 1
+    let links: number[] = [], linksCounter : number[][] = []
+    let currentPage = 1, currentLinkPage = 1
     let selected: number[] = []
-    let isFilterOpen = false, isFolmuraFilterOpen = false, isStatusFilterOpen = false;
+    let isFilterOpen = false, isFolmuraFilterOpen = false, isStatusFilterOpen = false, isDateFilterOpen = false;
 
     let search = ""
     $: users = data.filter(user => user.name.toLowerCase().includes(search.toLowerCase()) || user.date.includes(search) || user.kyc.toLowerCase().includes(search.toLowerCase()))
@@ -18,6 +18,10 @@
         currentPage = pageNumber
         selected  = []
         displayPage(pageNumber)
+    }
+    function changeLinkPage(number: number){
+        currentLinkPage = number
+        changePage(linksCounter[number-1][0])
     }
     function selectAll(){
         if(selected.length ==  pageData.length){
@@ -65,6 +69,22 @@
         for (let i = 1; i <= totalPages; i++) {
             links = [...links, i]
         }
+        linksCounter = []
+        const totalLinks = Math.ceil(links.length / linkCount)
+        let numbers = 1
+        let array: number[] = []
+        for (let i = 1; i <= totalLinks; i++) {
+            array = []
+            let stop = numbers+linkCount;
+            for(let j = numbers; j < stop && j <= links.length; j++){
+                console.log(j);
+                array = [...array, numbers]
+                numbers++
+            }
+            console.log("a go")
+            linksCounter = [...linksCounter, array]
+        }
+        console.log(linksCounter)
     }
     $: {
         if(users){
@@ -122,7 +142,7 @@
                     </div>
                     {#if isFolmuraFilterOpen}
                     <div 
-                        class="bg-white flex flex-col gap-0.5 absolute top-8 left-0 px-3 w-[135px] rounded-bl-lg rounded-br-lg pb-2"
+                        class="bg-white flex flex-col gap-1 absolute top-8 left-0 px-3 w-[135px] rounded-bl-lg rounded-br-lg pb-2"
                         class:shadow-label={isFolmuraFilterOpen}
                         >
                         <div class="flex gap-2 cursor-pointer">
@@ -170,7 +190,7 @@
                     </div>
                     {#if isStatusFilterOpen}
                     <div 
-                        class="bg-white flex flex-col gap-0.5 absolute top-8 left-0 px-3 w-[135px] rounded-bl-lg rounded-br-lg pb-2"
+                        class="bg-white flex flex-col gap-1 absolute top-8 left-0 px-3 w-[135px] rounded-bl-lg rounded-br-lg pb-2"
                         class:shadow-label={isStatusFilterOpen}
                         >
                         <div class="flex gap-2 cursor-pointer">
@@ -223,7 +243,7 @@
                 </div>
                 <h4 class="font-semibold self-center font-lato">Utilisateur</h4>
             </div>
-            <div class="flex w-full gap-3 px-4"> 
+            <div class="relative flex w-full gap-3 px-4"> 
                 <h4 class="font-semibold self-center font-lato">Date</h4>
                 <div class="py-1 px-1 shadow-out rounded-[4px] cursor-pointer">
                     <img src="util/double-direction.svg" alt="">
@@ -290,10 +310,21 @@
         {/each}
     </div>
     <div class="w-full flex justify-center gap-2">
-        
-        {#each links as link}
+        {#if currentLinkPage != 1}
+            <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage-1)}}>
+                <img class="self-start mt-0.5 -rotate-90" src="util/arrow.svg" alt="">
+            </button>
+            <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage-1)}}>...</button>
+        {/if}
+        {#each linksCounter[currentLinkPage-1] as link}
             <button class:text-blue-2={link==currentPage} class:underline={link==currentPage} class:font-semibold={link==currentPage} class="px-1 py-0.5 cursor-pointer" on:click={()=>{changePage(link)}}>{link}</button>
         {/each}
+        {#if currentLinkPage < linksCounter.length}
+            <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage+1)}}>...</button>
+            <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage+1)}}>
+                <img class="self-start mt-0.5 rotate-90" src="util/arrow.svg" alt="">
+            </button>
+        {/if}
     </div>
 </div>
 {#if users.length == 0}
