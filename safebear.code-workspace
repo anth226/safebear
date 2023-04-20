@@ -79,6 +79,9 @@
     "[json|jsonc|yaml|html|typescript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "[svelte]": {
+      "editor.defaultFormatter": "svelte.svelte-vscode",
+    },
     "[toml]": {
       "editor.defaultFormatter": "tamasfe.even-better-toml"
     }
@@ -112,7 +115,9 @@
       "ms-python.python",
       "ms-python.isort",
       "esbenp.prettier-vscode",
-      "tamasfe.even-better-toml"
+      "tamasfe.even-better-toml",
+      "bradlc.vscode-tailwindcss",
+      "svelte.svelte-vscode"      
     ]
   }
 }
