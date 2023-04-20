@@ -143,9 +143,7 @@ enum UserField {
   avatarUrl
   birthday
   onboardingCompleted
-  identityVerified
-  identityDocumentType
-  identityDocumentUrl
+  identityVerified rl
   age
   isMinor
   isParent
