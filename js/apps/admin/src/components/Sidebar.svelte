@@ -27,14 +27,18 @@
             {#each sidebarItems as item}
             <a href={item.route} 
                 class="flex gap-5 pl-10 py-3"
-                class:border-l-2={item.route==$page.route.id}
-                class:border-blue-vert={item.route==$page.route.id}
+                class:border-l-2={$page.route.id?.startsWith(item.route)}
+                class:border-blue-vert={$page.route.id?.startsWith(item.route)}
             >
-                <img src={`sidebar/${item.route==$page.route.id ? 'a-' : ''}${item.icon}`} alt="">
+            {#if $page.route.id?.startsWith(item.route)}
+                <img src={`sidebar/a-${item.icon}`} alt="">
+            {:else}
+                <img src={`sidebar/${item.icon}`} alt="">
+            {/if}
                 <span
-                    class:text-silver-200={item.route!=$page.route.id}
-                    class:text-blue-vert={item.route==$page.route.id}
-                    class:font-semibold={item.route==$page.route.id}
+                    class:text-silver-200={!$page.route.id?.startsWith(item.route)}
+                    class:text-blue-vert={$page.route.id?.startsWith(item.route)}
+                    class:font-semibold={$page.route.id?.startsWith(item.route)}
                     >{item.name}</span>
             </a>
             {/each}

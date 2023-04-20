@@ -1,18 +1,20 @@
 <script lang="ts">
+    import { search as searchData } from "../../store/search";
+    import { goto } from "$app/navigation";
 	import toast from "svelte-french-toast";
 	import type { IUser } from "$lib/types";
     import ClickOutside from 'svelte-click-outside'
     import { data } from "./data";
+	import { onMount } from "svelte";
 
     const pageSize = 7, linkCount= 3
-    let users = data
+    let users = data, search = ""
     let pageData: IUser[] = []
     let links: number[] = [], linksCounter : number[][] = []
     let currentPage = 1, currentLinkPage = 1
     let selected: number[] = []
     let isFilterOpen = false, isFolmuraFilterOpen = false, isStatusFilterOpen = false, isDateFilterOpen = false;
 
-    let search = ""
     $: users = data.filter(user => user.name.toLowerCase().includes(search.toLowerCase()) || user.date.includes(search) || user.kyc.toLowerCase().includes(search.toLowerCase()))
     function changePage(pageNumber: number){
         currentPage = pageNumber
@@ -95,15 +97,17 @@
     }
     displayPage(1);
     generatePaginationLinks();
+
+    onMount(()=>{
+        searchData.subscribe((value)=>{
+            search = value
+            console.log(value)
+        })
+    })
 </script>
 <svelte:head>
     <title>Utilisateurs - Safebear</title>
 </svelte:head>
-<div class="flex flex-col gap-6 -mt-12">
-    <div class="relative w-1/3">
-        <img class="absolute top-2 left-2" src="util/search.svg" alt="">
-        <input bind:value={search} type="text" class="py-2 pl-10 w-full border border-silver-300 rounded-[3px] bg-white placeholder:text-silver-300 focus:outline-none" placeholder="Rechercher un utilisateur">
-    </div>
     <div class="flex justify-between">
         <h1 class="text-2xl">Utilisateurs</h1>
         <div class="flex gap-4">
@@ -280,7 +284,8 @@
                         <img src="util/tick.svg" alt="">
                     {/if}
                     </div>
-                    <h4 class="self-center underline text-blue-vert font-medium">{user.name}</h4>
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <h4 on:click={()=>{goto(`/utilisateurs/${user.id}`)}} class="self-center cursor-pointer underline text-blue-vert font-medium">{user.name}</h4>
                 </div>
                 <div class="flex w-full gap-3 px-4"> 
                     <h4 class="self-center text-black opacity-[65%]">{user.date}</h4>
@@ -316,9 +321,11 @@
             </button>
             <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage-1)}}>...</button>
         {/if}
-        {#each linksCounter[currentLinkPage-1] as link}
-            <button class:text-blue-2={link==currentPage} class:underline={link==currentPage} class:font-semibold={link==currentPage} class="px-1 py-0.5 cursor-pointer" on:click={()=>{changePage(link)}}>{link}</button>
-        {/each}
+        {#if linksCounter[currentLinkPage-1]}
+            {#each linksCounter[currentLinkPage-1] as link}
+                <button class:text-blue-2={link==currentPage} class:underline={link==currentPage} class:font-semibold={link==currentPage} class="px-1 py-0.5 cursor-pointer" on:click={()=>{changePage(link)}}>{link}</button>
+            {/each}
+        {/if}
         {#if currentLinkPage < linksCounter.length}
             <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage+1)}}>...</button>
             <button class="px-1 py-0.5 cursor-pointer" on:click={()=>{changeLinkPage(currentLinkPage+1)}}>
@@ -326,7 +333,6 @@
             </button>
         {/if}
     </div>
-</div>
 {#if users.length == 0}
     <div class="flex  w-full  bg-silver justify-center">
         <h4 class="self-center text-black opacity-[45%]">Aucune donnée disponible...</h4>
