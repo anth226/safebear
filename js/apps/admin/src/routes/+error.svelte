@@ -9,8 +9,8 @@
 
 	let title = offline ? 'Offline' : $page.status;
 	if ($page.status === 404) {
-		title = 'Page not found :(';
-		message = 'Sorry! If you think this URL is broken, please let us know!';
+		title = 'Page non trouvée :(';
+		message = 'Désolé! Si vous pensez que cette URL est cassée, veuillez nous en informer !';
 	}
 </script>
 
@@ -18,9 +18,9 @@
 	<title>{title}</title>
 </svelte:head>
 
-<section class="container prose mx-auto py-12 dark:prose-invert">
+<section class="container prose mx-auto p-16 dark:prose-invert bg-blue-2">
 	<h1>{$page.status}: {title}</h1>
-	<p class="font-mono">{message}</p>
+	<p class="font-lato">{message}</p>
 	{#if dev && $page.error?.stack}
 		<pre class="mono overflow-scroll bg-gray-800 p-8">{$page.error?.stack}</pre>
 	{/if}

@@ -71,20 +71,21 @@
                 <span class="text-silver-hr">Message:</span>
                 <textarea value="Dis donc sale **** tu réponds plus à mes messages ? T’as fait comme ton père c’est ça tu t’es barré ! Espèce de singe" class="focus:outline-none resize-none" name="" id="" cols="30" rows="6"></textarea>
             </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="flex items-center justify-center gap-4">
                 <div class="flex flex-col gap-3">
                     <span class="self-center">Oui</span>
-                    <img use:shortcut={{code: 'KeyA'}} on:click={()=>console.log("oui")} class="cursor-pointer" src="labellisation/tick.svg" alt="">
+                    <img use:shortcut={{code: 'KeyA'}} on:click={()=>console.log("oui")} class="cursor-pointer" src="/labellisation/tick.svg" alt="">
                     <span class="px-2  bg-silver-hr bg-opacity-50 text-center rounded-[10px] self-center -mt-16">A</span>
                 </div>
                 <div class="flex flex-col gap-3">
                     <span class="self-center">Non</span>
-                    <img use:shortcut={{code: 'KeyX'}} on:click={()=>console.log("no")} class="cursor-pointer" src="labellisation/cross.svg" alt="">
+                    <img use:shortcut={{code: 'KeyX'}} on:click={()=>console.log("no")} class="cursor-pointer" src="/labellisation/cross.svg" alt="">
                     <span class="px-2  bg-silver-hr bg-opacity-50 text-center rounded-[10px] self-center -mt-16">X</span>
                 </div>
                 <div class="flex flex-col gap-3">
                     <span class="self-center">Je ne sais pas</span>
-                    <img use:shortcut={{code: 'Space'}} on:click={()=>console.log("idk")} class="cursor-pointer" src="labellisation/idk.svg" alt="">
+                    <img use:shortcut={{code: 'Space'}} on:click={()=>console.log("idk")} class="cursor-pointer" src="/labellisation/idk.svg" alt="">
                     <span class="px-2  bg-silver-hr bg-opacity-50 text-center rounded-[10px] self-center -mt-16">Space</span>
                 </div>
             </div>

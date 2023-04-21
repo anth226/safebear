@@ -2,7 +2,7 @@
     import { search } from "../../store/search";
 </script>
 <svelte:head>
-    <title>Utilisateurs - Safebear</title>
+    <title>Gestion des admins - Safebear</title>
 </svelte:head>
 <div class="flex flex-col gap-6 -mt-12">
     <div class="relative w-1/3">

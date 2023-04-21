@@ -11,15 +11,15 @@
 	};
 	export let data;
 
-	const user = users.find((user) => user.id == data.userId);
+	const user = users.find((user) => user.id == data.adminId);
 
 	function deleteData() {
-		goto("/utilisateurs")
+		goto("/gestion-admin")
 		toast.success('Supprimé avec succès');
 	}
 
 	function deactivateData() {
-		goto("/utilisateurs")
+		goto("/gestion-admin")
 		toast.success('Complété avec succès');
 	}
 </script>
@@ -34,8 +34,7 @@
 		<div class="flex gap-6">
 			<h4 class="text-3xl">{user?.name || info.fname + '' + info.lname}</h4>
 			<div class="flex gap-4 self-center">
-				<button class="rounded bg-blue px-3 text-lg text-dark-green">Proche</button>
-				<button class="rounded bg-[#d9d9d9] px-3 text-lg text-dark-green">Désactivé</button>
+				<button class="rounded bg-blue px-3 text-lg text-dark-green">Admin</button>
 			</div>
 		</div>
 		<div class="flex flex-col gap-4 pr-10">
@@ -56,68 +55,18 @@
 						<span class="font-semibold">Création du compte :</span>
 						<span>23/09/2022</span>
 					</div>
-					<div class="flex w-full gap-2 border-b border-blue-2 pb-4">
-						<span class="font-semibold">KYC:</span>
-						<div
-							class="flex gap-2 rounded-[31px] px-1 py-0.5 pr-2"
-							class:bg-[#33B35E]={user?.kyc == 'Complété'}
-							class:bg-[#F49817]={user?.kyc == 'En attente'}
-						>
-							<img class:hidden={user?.kyc != 'Complété'} src="/util/kyc-tick.svg" alt="" />
-							<img
-								class:hidden={user?.kyc != 'En attente'}
-								src="/util/kyc-dashed-circle.svg"
-								alt=""
-							/>
-							<h4 class="self-center text-white">{user?.kyc}</h4>
-						</div>
-					</div>
-				</div>
-
-				<div class="flex justify-between gap-6">
-					<div class="flex w-full gap-3 border-b border-blue-2 pb-4">
-						<span class="font-semibold">Formule :</span>
-						<span>Safe</span>
-					</div>
-					<div class="relative flex w-full gap-2 pb-4">
-						<div class="absolute top-2">
-							<span class="font-semibold">Actions :</span>
-							<span> 3</span>
-						</div>
-					</div>
-				</div>
-
-				<div class="flex justify-between gap-6">
-					<div class="flex w-full gap-3 border-b border-blue-2 pb-4">
-						<span class="font-semibold">Statut :</span>
-						<span>Proche -18 ans</span>
-					</div>
-					<div class="flex w-full gap-2 border-b border-blue-2 pb-4">
-						<div class="flex gap-1">
-							<img src="/util/warning-1.svg" alt="">
-							<span class="font-semibold">Signalement : 1</span>
-						</div>
-
-						<div class="flex gap-1">
-							<img src="/util/warning-2.svg" alt="">
-							<span class="font-semibold">Blocage : 1</span>
-						</div>
-
-						<div class="flex gap-1">
-							<img src="/util/warning-3.svg" alt="">
-							<span class="font-semibold">Plainte : 1</span>
-						</div>
-					</div>
-				</div>
-				<div class="flex justify-between gap-6">
-					<div class="flex w-full gap-3 pb-4">
+                    <div class="flex w-full gap-3 border-b border-blue-2 pb-4">
 						<span class="font-semibold">ID :</span>
 						<span>5367490900</span>
 					</div>
-					<div class="flex w-full gap-3 pb-4">
-						<span class="font-semibold">Compte lié(s) :</span>
-						<span class="underline text-dark-green"
-						>Jane Doe</span>
+				</div>
+
+				<div class="flex justify-between gap-6 box-border">
+					<div class="flex w-full gap-3 border-b border-blue-2 pb-4">
+						<span class="font-semibold">Dernière connexion :</span>
+						<span>10/03/2023</span>
+					</div>
+                    <div class="flex w-full gap-3 pb-4">
 					</div>
 				</div>
 			</div>

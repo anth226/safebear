@@ -20,7 +20,7 @@
         }
     ]
 </script>
-<div class="bg-white w-[16%] flex flex-col justify-between pt-8 pb-2">
+<div class="bg-white w-[16%] flex flex-col justify-between pt-8 pb-2 h-screen sticky top-0">
     <div class="flex flex-col gap-10">
         <h1 class="text-dark-green text-2xl pl-10 font-medium cursor-pointer"><a href="/">Safebear Admin</a></h1>
         <div class="flex flex-col gap-2 cursor-pointer">
@@ -31,9 +31,9 @@
                 class:border-blue-vert={$page.route.id?.startsWith(item.route)}
             >
             {#if $page.route.id?.startsWith(item.route)}
-                <img src={`sidebar/a-${item.icon}`} alt="">
+                <img src={`/sidebar/a-${item.icon}`} alt="">
             {:else}
-                <img src={`sidebar/${item.icon}`} alt="">
+                <img src={`/sidebar/${item.icon}`} alt="">
             {/if}
                 <span
                     class:text-silver-200={!$page.route.id?.startsWith(item.route)}
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="pl-10 cursor-pointer flex gap-3">
-        <img src="sidebar/aid.svg" alt="aide">
+        <img src="/sidebar/aid.svg" alt="aide">
         <h5 class="text-silver-200">Aide</h5>
     </div>
 </div>

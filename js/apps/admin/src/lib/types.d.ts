@@ -7,3 +7,10 @@ export interface IUser{
     kyc: string,
     linked_accounts: number
 }
+
+export interface IAdmin{
+    id: number,
+    name: string,
+    email: string,
+    role: string
+}
